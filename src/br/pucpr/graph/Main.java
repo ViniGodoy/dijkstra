@@ -24,7 +24,7 @@ public class Main {
     private static final int S19 = 18;
     private static final int S20 = 19;
 
-    private static final int readStation(String type, Scanner in) {
+    private static int readStation(String type, Scanner in) {
         while (true) {
             System.out.println(type + ":");
             String line = in.nextLine().trim();
@@ -44,7 +44,8 @@ public class Main {
 
     public static void main(String[] args) {
         // Create the Graphland Subway System
-        //------------------------------------
+        // (see subwaySystem.pdf file in extra folder)
+        //--------------------------------------------
         Graph subway = new Graph(20);
 
         //RED LINE
