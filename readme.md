@@ -1,4 +1,5 @@
-#Dijkstra Algorithm Demo
+# Dijkstra Algorithm Demo
+
 This is a simple sample of the Dijkstra algorithm implemented for Data Structures Discipline of PUCPR.
 
 The goal of the program is to find the best path between two subway stations of the fictional city of Graphland. Take
