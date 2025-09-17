@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Graph {
     private static final int UNDEFINED = -1;
-    private int vertices[][];
+    private final int[][] vertices;
 
     public Graph(int numVertices) {
         vertices = new int[numVertices][numVertices];
@@ -13,11 +13,6 @@ public class Graph {
     public void makeEdge(int vertex1, int vertex2, int time) {
         vertices[vertex1][vertex2] = time;
         vertices[vertex2][vertex1] = time;
-    }
-
-    public void removeEdge(int vertex1, int vertex2) {
-        vertices[vertex1][vertex2] = 0;
-        vertices[vertex2][vertex1] = 0;
     }
 
     public int getCost(int vertex1, int vertex2) {
@@ -47,9 +42,9 @@ public class Graph {
     public List<Integer> path(int from, int to) {
         //Initialization
         //--------------
-        int cost[] = new int[vertices.length];
-        int prev[] = new int[vertices.length];
-        Set<Integer> unvisited = new HashSet<>();
+        int[] cost = new int[vertices.length];
+        int[] prev = new int[vertices.length];
+        var unvisited = new HashSet<Integer>();
 
         //The initial node has cost 0 and no previous vertex
         cost[from] = 0;
@@ -66,16 +61,16 @@ public class Graph {
         //Graph search
         //------------
         while (!unvisited.isEmpty()) {
-            int near = closest(cost, unvisited);
+            var near = closest(cost, unvisited);
             unvisited.remove(near);
 
-            for (Integer neighbor : getNeighbors(near)) {
+            getNeighbors(near).forEach(neighbor -> {
                 int totalCost = cost[near] + getCost(near, neighbor);
                 if (totalCost < cost[neighbor]) {
                     cost[neighbor] = totalCost;
                     prev[neighbor] = near;
                 }
-            }
+            });
             //Found?
             if (near == to) {
                 return makePathList(prev, near);
@@ -89,7 +84,8 @@ public class Graph {
     private int closest(int[] dist, Set<Integer> unvisited) {
         double minDist = Integer.MAX_VALUE;
         int minIndex = 0;
-        for (Integer i : unvisited) {
+
+        for (var i : unvisited) {
             if (dist[i] < minDist) {
                 minDist = dist[i];
                 minIndex = i;
@@ -99,13 +95,12 @@ public class Graph {
     }
 
     private List<Integer> makePathList(int[] prev, int u) {
-        List<Integer> path = new ArrayList<>();
+        var path = new ArrayList<Integer>();
         path.add(u);
         while (prev[u] != UNDEFINED) {
             path.add(prev[u]);
             u = prev[u];
         }
-        Collections.reverse(path);
-        return path;
+        return path.reversed();
     }
 }

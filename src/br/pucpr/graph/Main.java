@@ -24,30 +24,35 @@ public class Main {
     private static final int S19 = 18;
     private static final int S20 = 19;
 
+    /**
+     * Reads a train station from the console. Stops the program if enter is typed.
+     * @param type Either source or destination
+     * @param in The scanner to read
+     * @return The read station
+     */
     private static int readStation(String type, Scanner in) {
         while (true) {
-            System.out.println(type + ":");
-            String line = in.nextLine().trim();
+            System.out.printf("%s:", type);
+            var line = in.nextLine().trim();
             if (line.isEmpty()) {
                 System.out.println("Bye bye!");
                 System.exit(0);
             }
             try {
-                int station = Integer.parseInt(line);
+                var station = Integer.parseInt(line);
                 if (station >= 1 && station <= 20) return station-1;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
             }
             System.out.println("Invalid station! Try again.");
         }
     }
 
-
-    public static void main(String[] args) {
-        // Create the Graphland Subway System
-        // (see subwaySystem.pdf file in extra folder)
-        //--------------------------------------------
-        Graph subway = new Graph(20);
-
+    /**
+     * Create the Graphland Subway System
+     * (see subwaySystem.pdf file in extra folder)
+     */
+    private static Graph createGraph() {
+        var subway = new Graph(20);
         //RED LINE
         subway.makeEdge(S1, S2, 16);
         subway.makeEdge(S2, S3, 14);
@@ -83,10 +88,15 @@ public class Main {
         subway.makeEdge(S3, S16, 11);
         subway.makeEdge(S16, S19, 13);
         subway.makeEdge(S19, S20, 12);
+        return subway;
+    }
+
+    static void main() {
+        var subway = createGraph();
 
         //Graphland Subway Terminal
         //-------------------------
-        Scanner in = new Scanner(System.in);
+        var in = new Scanner(System.in);
         System.out.println("Welcome to Graphland Subway System!");
         System.out.println("   built by Mayor Vinicius Godoy de Mendonca");
         System.out.println("   responsible engineer Henri Frederico Eberspacher");
@@ -94,14 +104,14 @@ public class Main {
 
         while (true) {
             System.out.println("Please, enter your desired route. Leave the field blank to exit.");
-            int source = readStation("Source", in);
-            int destination = readStation("Destination", in);
+            var source = readStation("Source", in);
+            var destination = readStation("Destination", in);
 
             System.out.println("Fastest route:");
-            for (Integer station : subway.path(source, destination)) {
-                System.out.print((station+1) + " -> ");
-            }
+            subway.path(source, destination).forEach(station -> System.out.printf("%02d -> ", station+1));
             System.out.println("EXIT");
         }
     }
+
+
 }
