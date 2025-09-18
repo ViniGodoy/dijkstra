@@ -17,3 +17,5 @@ https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
 And finally, this great tutorial about A* algorithm, available in several languages:
 https://www.youtube.com/watch?v=i0x5fj4PqP4
+
+If you just want to download an executable .jar file and play around, just [click here](./out/artifacts/jar/dijkstra.jar)
